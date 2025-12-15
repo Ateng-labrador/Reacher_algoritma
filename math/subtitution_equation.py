@@ -26,3 +26,6 @@ def backward_substitution(U, y):
             sum -= U[i][j] * x[j]
         x[i] = sum / U[i][i]
     return x
+
+if __name__ == "__main__":
+    pass
