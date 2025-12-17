@@ -1,9 +1,10 @@
-def algoritm_gauss(A, b):
+def algoritm_gauss_pivot(A, b):
     """
     Algoritma ini belum mendapatkan nilai x
     algoritma ini hanya membuat matriks A
     menjadi segitiga dan b menjadi matrik
-    mengikuti matriks ruas kiri
+    mengikuti matriks ruas kiri menggunakan pivot.
+    
     """
     n = len(b)
     A = [row[:] for row in A]
@@ -24,6 +25,33 @@ def algoritm_gauss(A, b):
                     A[k][j] -= m * A[i][j]
                 b[k] -= m * b[i]
     return A, b
+
+
+def algoritma_gauss(A, b):
+    """
+    Algoritma gauss melakukan transformasi
+    mengubah matrisk menjadi matrik segitga
+    dan mengubah pada sisi kanannya juga.
+
+    Parameter:
+    A : Matriks (n x n)
+    b : Matriks (n x 1)
+
+    return:
+    U : matriks segitiga atas
+    b : matriks modifikasi
+    """
+    U = [row[:] for row in A]
+    b = b[:]
+    
+    for i in range(len(b)):
+        for k in range(i + 1, len(b)):
+            if A[i][i] != 0:
+                m = A[k][i] / A[i][i]
+                for j in range(i, len(b)):
+                    A[k][j] -= m * A[i][j]
+                b[k] -= m * b[i]
+    return U, b
 
 
 def luDecomposition(mat):
@@ -73,13 +101,13 @@ def forward_subtitution(L, b):
     return y
 
 
-def sumofdigit(n):
-    sum = 0
-    while n != 0:
-        last = n % 10
-        sum += last
-        n //= 10
-    return sum
+# def sumofdigit(n):
+#     sum = 0
+#     while n != 0:
+#         last = n % 10
+#         sum += last
+#         n //= 10
+#     return sum
 
 if __name__ == "__main__":
     A = [
@@ -88,5 +116,8 @@ if __name__ == "__main__":
         [3, 6, 10],
     ]
     b = [1, 2, 3]
-    lower, upper = luDecomposition(A)
-    print(forward_subtitution(lower, b))
+    U, b = algoritma_gauss(A, b)
+    for i in U:
+        print(i)
+    for i in b:
+        print(b)
