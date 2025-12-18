@@ -10,8 +10,11 @@ def algoritm_gauss_pivot(A, b):
     A = [row[:] for row in A]
     b = b[:]
 
+
+    # ambil kolom
     for i in range(n):
         max_row = i
+        # ambil baris
         for k in range(i + 1, n):
             if abs(A[k][i]) > abs(A[max_row][i]):
                 max_row = k

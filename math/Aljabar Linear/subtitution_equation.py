@@ -51,9 +51,9 @@ if __name__ == "__main__":
         ↓
     Ax = b → (L×U)x = b
         ↓
-    Step 1: Ly = b (Forward Substitution)
+    Step 1: Ly = b (Maju Substitution)
         ↓
-    Step 2: Ux = y (Backward Substitution)
+    Step 2: Ux = y (Muncur Substitution)
         ↓
     Solusi: x
     
