@@ -12,7 +12,6 @@ def algoritmaGaussPivot(A, b):
     # Ambil kolom
     for i in range(n):
         max_row = i
-        # Ambil baris
         for k in range(i + 1, n):
             if abs(A[k][i]) > abs(A[max_row][i]):
                 max_row = k
@@ -26,7 +25,7 @@ def algoritmaGaussPivot(A, b):
                     A[k][j] -= m*A[i][j]
                 b[k] -= m * b[i]
     return A, b
-        
+
 
 def subtitusi_maju():
     pass
@@ -47,15 +46,20 @@ def subtitusi_mundur(U, y):
 
 
 if __name__ == "__main__":
-    A = [[0.0003, 3.0000],
-         [1.0000, 1.0000]]
-    b = [2.0001, 1.0000]
+    # A = [[0.0003, 3.0000],
+    #      [1.0000, 1.0000]]
+    A = [
+        [1, 4, 7],
+         [2, 5, 8],
+         [3, 6, 10]
+        ]
+    b = [2.0001, 1.0000, 3.000]
     U, y = algoritmaGaussPivot(A, b)
     for row in U:
         print(row)
-    for row in y:
-        print(row)
-    print('\n')
-    x = subtitusi_mundur(U, y)
-    print(x)
+    # for row in y:
+    #     print(row)
+    # print('\n')
+    # x = subtitusi_mundur(U, y)
+    # print(x)
     

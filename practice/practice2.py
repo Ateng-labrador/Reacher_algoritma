@@ -18,50 +18,43 @@ def faktorisasiLUPivot(A):
 
 def segitiga_atas(A):
     n = len(A)
+    A = [row[:] for row in A]
 
-    upper = [[0 for _ in range(n)]
-             for _ in range(n)]
-    lower = [[0 for _ in range(n)]
-             for _ in range(n)]
-    # ambil kolom
-    # stay pada satu pivot
     for i in range(n):
-        # ambil baris
-        # ambil baris satu satu
-        for k in range(i, n):
-            sum = 0
-            for j in range(i):
-                for j in range(i):
-                    sum += (lower[i][j] * upper[i][k])
-            upper[i][k] = A[i][k] - sum
-    return upper
+        max_row = i
+        for k in range(i + 1, n):
+            if abs(A[k][i]) > abs(A[max_row][i]):
+                max_row = k
+        A[i], A[max_row] = A[max_row], A[i]
+
+        for k in range(i + 1, n):
+            if A[i][i] != 0:
+                m = A[k][i] / A[i][i]
+                for j in range(i, n):
+                    A[k][j] -= m*A[i][j]
+    return A
+
+def segitiga_bawah(A):
+    n = len(A)
+    A = [row[:] for row in A]
+
+    for i in range(n - 1, -1, -1):
+        max_row = i
+        for k in range(0, i):
+            if abs(A[k][i]) > abs(A[max_row][i]):
+                max_row = k
+        A[i], A[max_row] = A[max_row], A[i]
+        for k in range(0, i):
+            if A[i][i] != 0:
+                m = A[k][i] / A[i][i]
+                for j in range(0, n):
+                    A[k][j] -= m*A[i][j]
+    return A
 
 if __name__ == "__main__":
     A = [[1, 4, 7],
          [2, 5, 8],
          [3, 6, 10]]
-    n = len(A)
-
-    upper = [[0 for _ in range(n)]
-             for _ in range(n)]
-    lower = [[0 for _ in range(n)]
-             for _ in range(n)]
-    # ambil kolom
-    # stay pada satu pivot
-    for i in range(n):
-        # ambil baris
-        # ambil baris satu satu
-        for k in range(i, n):
-            sum = 0
-            for j in range(i):
-                for j in range(i):
-                    print(f"ini lower [{i}][{j}] = {lower[i][j]}")
-                    print(f"ini upper [{i}][{j}] = {upper[i][j]}")
-                    sum += (lower[i][j] * upper[i][k])
-            print(f"ini upper [{i}][{k}] = {upper[i][k]}")
-            print(f"{sum}")
-            upper[i][k] = A[i][k] - sum
-    print('\n')
-    for row in upper:
-        print(row)
-    
+    x = segitiga_bawah(A)
+    for i in x:
+        print(i)
