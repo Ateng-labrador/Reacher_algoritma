@@ -89,6 +89,38 @@ def luDecomposition(mat):
     return lower, upper
 
 
+def FaktorisasiLUPivot(A):
+    n = len(A)
+    lower = [[0 for _ in range(n)]
+             for _ in range(n)]
+    upper = [[0 for _ in range(n)]
+             for _ in range(n)]
+    for i in range(n):
+        # ambil titik pivot
+        max_row = i
+        for k in range(i + 1, n):
+            if abs(A[k][i]) > abs(A[max_row][i]):
+                max_row = k
+        
+        A[i], A[max_row] = A[max_row], A[i]
+        # pembuatan pada bagian atas
+        for k in range(i, n):
+            sum = 0
+            for j in range(i):
+                sum += (lower[i][j] * upper[i][k])
+            upper[i][k] = A[i][k] - sum
+        
+        # pembuatan pada bagian lower
+        for k in range(i, n):
+            if(i == k):
+                lower[i][i] = 1
+            else:
+                sum = 0
+                for j in range(i):
+                    sum += (lower[k][j] * upper[j][i])
+                lower[k][i] = (A[k][i] - sum) / upper[i][i]
+    return lower, upper
+
 def forward_subtitution(L, b):
     n = len(b)
     y = [0] * n
@@ -116,8 +148,9 @@ if __name__ == "__main__":
         [3, 6, 10],
     ]
     b = [1, 2, 3]
-    U, b = algoritma_gauss(A, b)
+    L, U = FaktorisasiLUPivot(A)
+    for i in L:
+        print(i)
+    print('\n')
     for i in U:
         print(i)
-    for i in b:
-        print(b)
